@@ -2,140 +2,112 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>天和物流</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天和物流 - 电脑专用录单系统</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f5f5;padding:16px}
-.title{text-align:center;font-size:22px;margin:10px 0 20px;color:#222}
-.input-box{margin-bottom:20px}
-.label{font-size:17px;color:#333;margin-bottom:8px;display:block}
-input,select{width:100%;padding:16px;border:1px solid #ddd;border-radius:10px;font-size:17px;background:#fff}
-input:disabled{background:#eee;color:#666}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",Arial,sans-serif}
+body{background:#f5f7fa;padding:20px;max-width:1200px;margin:0 auto;}
+.title{text-align:center;font-size:28px;margin:20px 0 30px;color:#222;font-weight:bold;}
+
+/* 🔥 美观布局：自动适配行列 */
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+  margin-bottom:24px;
+}
+/* 第一行专用：2列铺满 */
+.row-2{
+  grid-template-columns:repeat(2, 1fr);
+}
+.row-4{
+  grid-template-columns:repeat(4, 1fr);
+}
+.input-box{margin-bottom:0;}
+.label{font-size:16px;color:#333;margin-bottom:8px;display:block;font-weight:500;}
+input,select{
+  width:100%;padding:16px;border:1px solid #ddd;border-radius:10px;font-size:16px;background:#fff;
+  transition:0.2s;border:1px solid #e0e6ed;
+}
+input:focus,select:focus{
+  outline:none;border-color:#1677ff;box-shadow:0 0 0 3px rgba(22, 119, 255, 0.1);
+}
+input:disabled{background:#f7f8fa;color:#666}
 input.error {
   border:2px solid #ff3333 !important;
   background:#fff2f2 !important;
 }
-.btn-line{display:flex;gap:10px;margin:12px 0}
-button{flex:1;padding:18px;border:none;border-radius:10px;font-size:17px;color:#fff;font-weight:500}
-.btn-save{background:#009955}
-.btn-export{background:#ff6600}
-.btn-search-page{background:#1677ff;padding:18px;border-radius:10px;font-size:17px;color:#fff;width:100%}
-.edit-btn{background:#1677ff;color:#fff;border:none;padding:10px 14px;border-radius:6px;font-size:15px;margin-top:8px;margin-right:6px}
-.del-btn{background:#cc3333;color:#fff;border:none;padding:10px 14px;border-radius:6px;font-size:15px;margin-top:8px}
+
+.btn-group{
+  display:flex;gap:16px;margin:20px 0;
+}
+button{
+  padding:18px;border:none;border-radius:10px;font-size:16px;color:#fff;
+  font-weight:500;cursor:pointer;transition:0.2s;
+}
+button:hover{opacity:0.9}
+.btn-save{background:#009955;flex:1;}
+.btn-export{background:#ff6600;flex:1;}
+.btn-search-page{background:#1677ff;width:100%;padding:18px;border-radius:10px;}
+
+.edit-btn{background:#1677ff;color:#fff;border:none;padding:10px 14px;border-radius:6px;font-size:14px;margin-right:6px;cursor:pointer;}
+.del-btn{background:#cc3333;color:#fff;border:none;padding:10px 14px;border-radius:6px;font-size:14px;cursor:pointer;}
+
 .list-box{margin-top:24px}
-.list-title{font-size:18px;margin-bottom:12px}
-.item-card{background:#fff;padding:16px;border-radius:10px;margin-bottom:12px;border:1px solid #eee}
-.item-card p{font-size:16px;line-height:1.5;margin-bottom:8px}
+.item-card{background:#fff;padding:20px;border-radius:12px;margin-bottom:12px;border:1px solid #eee}
+.item-card p{font-size:15px;line-height:1.6;margin-bottom:8px}
+
 .toast{
   position:fixed;bottom:30%;left:50%;transform:translate(-50%,0);
-  background:#000000cc;color:#fff;padding:12px 24px;
-  border-radius:8px;font-size:16px;display:none;z-index:9999;
+  background:#000000cc;color:#fff;padding:14px 26px;border-radius:8px;font-size:16px;
+  display:none;z-index:9999;
 }
+
 .search-box{
-  background:#fff;padding:14px;border-radius:10px;margin-top:24px;
+  background:#fff;padding:22px;border-radius:12px;margin-top:24px;
   border:1px solid #eee;
 }
-.search-title{
-  font-size:16px;font-weight:bold;margin-bottom:10px;color:#333;
-}
-.search-row{
-  display:flex;gap:8px;margin-bottom:8px;
-}
-.search-row .input-box{
-  flex:1;margin:0;
-}
-.btn-search{
-  background:#1677ff;color:#fff;border:none;padding:14px;border-radius:8px;
-  font-size:15px;margin-top:4px;width:100%;
-}
-.btn-reset{
-  background:#999;color:#fff;border:none;padding:14px;border-radius:8px;
-  font-size:15px;margin-top:4px;width:100%;
-}
+.search-title{font-size:18px;font-weight:bold;margin-bottom:14px;color:#333;}
+.search-row{display:flex;gap:16px;margin-bottom:14px;align-items:flex-end;}
+.search-row .input-box{flex:1;margin:0;}
+.btn-search{background:#1677ff;color:#fff;border:none;padding:16px;border-radius:8px;font-size:15px;width:100%;cursor:pointer;}
+.btn-reset{background:#999;color:#fff;border:none;padding:16px;border-radius:8px;font-size:15px;width:100%;cursor:pointer;}
+
 .modal-mask{
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,0.5);display:none;z-index:999;
 }
 .modal-box{
   position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:92%;max-width:400px;background:#fff;border-radius:12px;
-  padding:16px;max-height:85vh;overflow-y:auto;
+  width:90%;max-width:520px;background:#fff;border-radius:14px;padding:24px;
+  max-height:85vh;overflow-y:auto;
 }
-.modal-title{
-  text-align:center;font-size:18px;margin-bottom:16px;
-}
-.btn-close{
-  background:#999;color:#fff;border:none;padding:16px;
-  border-radius:10px;width:100%;font-size:17px;margin-top:10px;
-}
-.back-btn{
-  background:#999;color:#fff;padding:14px 16px;border-radius:8px;font-size:16px;margin-bottom:16px;width:100%
-}
-.export-result-btn{
-  background:#ff6600;color:#fff;padding:16px;border-radius:10px;font-size:17px;width:100%;margin:10px 0;border:none;
-}
-.clear-all-btn{
-  background:#cc3333;color:#fff;padding:16px;border-radius:10px;font-size:17px;width:100%;margin:10px 0;border:none;
-}
-.clear-search-btn{
-  background:#ff4444;color:#fff;padding:16px;border-radius:10px;font-size:17px;width:100%;margin:10px 0;border:none;
-}
+.modal-title{text-align:center;font-size:22px;margin-bottom:22px;font-weight:bold;}
+.btn-close{background:#999;color:#fff;border:none;padding:16px;border-radius:8px;width:100%;font-size:16px;margin-top:10px;cursor:pointer;}
+.back-btn{background:#999;color:#fff;padding:16px;border-radius:8px;font-size:16px;margin-bottom:20px;width:100%;cursor:pointer;}
+.export-result-btn{background:#ff6600;color:#fff;padding:18px;border-radius:8px;font-size:16px;width:100%;margin:10px 0;border:none;cursor:pointer;}
+.clear-all-btn{background:#cc3333;color:#fff;padding:18px;border-radius:8px;font-size:16px;width:100%;margin:10px 0;border:none;cursor:pointer;}
+.clear-search-btn{background:#ff4444;color:#fff;padding:18px;border-radius:8px;font-size:16px;width:100%;margin:10px 0;border:none;cursor:pointer;}
 </style>
 </head>
 <body>
+
 <div class="toast" id="toast">提示</div>
+
 <div class="modal-mask" id="editMask">
   <div class="modal-box">
     <div class="modal-title">修改单据</div>
-    <div class="input-box">
-      <span class="label">目的地</span>
-      <select id="e_addr">
-        <option value="西和">西和</option>
-        <option value="礼县">礼县</option>
-        <option value="盐官">盐官</option>
-      </select>
-    </div>
-    <div class="input-box">
-      <span class="label">货号</span>
-      <input type="text" id="e_hno" onblur="checkHnoEdit()">
-    </div>
-    <div class="input-box">
-      <span class="label">收件人</span>
-      <input type="text" id="e_getNname" onblur="checkNameEdit()">
-    </div>
-    <div class="input-box">
-      <span class="label">货名</span>
-      <input type="text" id="e_name">
-    </div>
-    <div class="input-box">
-      <span class="label">代收</span>
-      <input type="number" id="e_daishou" oninput="formatMoney(this);calcEdit()" min="0">
-    </div>
-    <div class="input-box">
-      <span class="label">提付</span>
-      <input type="number" id="e_tifu" oninput="formatMoney(this);checkPayEdit();calcEdit()" min="0">
-    </div>
-    <div class="input-box">
-      <span class="label">现付</span>
-      <input type="number" id="e_xianfu" oninput="formatMoney(this);checkPayEdit();calcEdit()" min="0">
-    </div>
-    <div class="input-box">
-      <span class="label">垫付</span>
-      <input type="number" id="e_dianfu" oninput="formatMoney(this);calcEdit()" min="0">
-    </div>
-    <div class="input-box">
-      <span class="label">回付</span>
-      <input type="number" id="e_huifu" oninput="formatMoney(this);calcEdit()" min="0">
-    </div>
-    <div class="input-box">
-      <span class="label">总运费</span>
-      <input type="number" id="e_total" readonly>
-    </div>
-    <div class="input-box">
-      <span class="label">送货费</span>
-      <input type="number" id="e_song" oninput="formatMoney(this)" min="0">
-    </div>
+    <div class="input-box"><span class="label">目的地</span><select id="e_addr"><option value="西和">西和</option><option value="礼县">礼县</option><option value="盐官">盐官</option></select></div>
+    <div class="input-box"><span class="label">货号</span><input type="text" id="e_hno" onblur="checkHnoEdit();checkEditHnoRepeat()"></div>
+    <div class="input-box"><span class="label">收件人</span><input type="text" id="e_getNname" onblur="checkNameEdit()"></div>
+    <div class="input-box"><span class="label">货名</span><input type="text" id="e_name"></div>
+    <div class="input-box"><span class="label">代收</span><input type="number" id="e_daishou" oninput="forcePositive(this);calcEdit()" min="0"></div>
+    <div class="input-box"><span class="label">提付</span><input type="number" id="e_tifu" oninput="forcePositive(this);checkPayEdit();calcEdit()" min="0"></div>
+    <div class="input-box"><span class="label">现付</span><input type="number" id="e_xianfu" oninput="forcePositive(this);checkPayEdit();calcEdit()" min="0"></div>
+    <div class="input-box"><span class="label">垫付</span><input type="number" id="e_dianfu" oninput="forcePositive(this);calcEdit()" min="0"></div>
+    <div class="input-box"><span class="label">回付</span><input type="number" id="e_huifu" oninput="forcePositive(this);calcEdit()" min="0"></div>
+    <div class="input-box"><span class="label">总运费</span><input type="number" id="e_total" readonly></div>
+    <div class="input-box"><span class="label">送货费</span><input type="number" id="e_song" oninput="forcePositive(this)" min="0"></div>
     <button class="btn-save" style="width:100%" onclick="saveEdit()">确认修改</button>
     <button class="btn-close" onclick="closeEdit()">关闭</button>
   </div>
@@ -144,74 +116,42 @@ button{flex:1;padding:18px;border:none;border-radius:10px;font-size:17px;color:#
 <div class="modal-mask" id="exportTodayMask">
   <div class="modal-box">
     <div class="modal-title">导出今日货单</div>
-    <div class="input-box">
-      <span class="label">请选择目的地</span>
-      <select id="exportTodayAddr">
-        <option value="西和">西和</option>
-        <option value="礼县">礼县</option>
-        <option value="盐官">盐官</option>
-      </select>
-    </div>
+    <div class="input-box"><span class="label">目的地</span><select id="exportTodayAddr"><option value="西和">西和</option><option value="礼县">礼县</option><option value="盐官">盐官</option></select></div>
     <button class="btn-export" style="width:100%" onclick="doExportToday()">确认导出</button>
     <button class="btn-close" onclick="closeExportToday()">取消</button>
   </div>
 </div>
 
 <div id="mainPage">
-  <div class="title">天和物流 - 手机录单</div>
-  <div class="input-box">
-    <span class="label">目的地</span>
-    <select id="addr">
-      <option value="西和">西和</option>
-      <option value="礼县">礼县</option>
-      <option value="盐官">盐官</option>
-    </select>
+  <div class="title">天和物流 - 电脑专用录单系统</div>
+  
+  <!-- 第1行：目的地 + 日期 → 🔥 2列铺满整行 -->
+  <div class="form-grid row-2">
+    <div class="input-box"><span class="label">目的地</span><select id="addr"><option value="西和">西和</option><option value="礼县">礼县</option><option value="盐官">盐官</option></select></div>
+    <div class="input-box"><span class="label">日期</span><input type="date" id="date"></div>
   </div>
-  <div class="input-box">
-    <span class="label">日期</span>
-    <input type="date" id="date">
+
+  <!-- 第2行：货号 + 收件人 + 货名 -->
+  <div class="form-grid">
+    <div class="input-box"><span class="label">货号</span><input type="text" id="hno" onblur="checkHno();checkTodayHnoRealTime()"></div>
+    <div class="input-box"><span class="label">收件人</span><input type="text" id="getNname" onblur="checkName()"></div>
+    <div class="input-box"><span class="label">货名</span><input type="text" id="name"></div>
+
+    <!-- 第3行：代收 + 提付 + 现付 -->
+    <div class="input-box"><span class="label">代收</span><input type="number" id="daishou" oninput="forcePositive(this);calc()" min="0"></div>
+    <div class="input-box"><span class="label">提付</span><input type="number" id="tifu" oninput="forcePositive(this);checkPay();calc()" min="0"></div>
+    <div class="input-box"><span class="label">现付</span><input type="number" id="xianfu" oninput="forcePositive(this);checkPay();calc()" min="0"></div>
   </div>
-  <div class="input-box">
-    <span class="label">货号</span>
-    <input type="text" id="hno" onblur="checkHno();checkTodayHnoRealTime()">
+
+  <!-- 第4行：垫付 + 回付 + 总运费 + 送货费 🔥 美观4列 -->
+  <div class="form-grid row-4" style="margin-top:-4px;">
+    <div class="input-box"><span class="label">垫付</span><input type="number" id="dianfu" oninput="forcePositive(this);calc()" min="0"></div>
+    <div class="input-box"><span class="label">回付</span><input type="number" id="huifu" oninput="forcePositive(this);calc()" min="0"></div>
+    <div class="input-box"><span class="label">总运费</span><input type="number" id="total" readonly></div>
+    <div class="input-box"><span class="label">送货费</span><input type="number" id="song" oninput="forcePositive(this)" min="0"></div>
   </div>
-  <div class="input-box">
-    <span class="label">收件人</span>
-    <input type="text" id="getNname" onblur="checkName()">
-  </div>
-  <div class="input-box">
-    <span class="label">货名</span>
-    <input type="text" id="name">
-  </div>
-  <div class="input-box">
-    <span class="label">代收</span>
-    <input type="number" id="daishou" oninput="formatMoney(this);calc()" min="0">
-  </div>
-  <div class="input-box">
-    <span class="label">提付</span>
-    <input type="number" id="tifu" oninput="formatMoney(this);checkPay();calc()" min="0">
-  </div>
-  <div class="input-box">
-    <span class="label">现付</span>
-    <input type="number" id="xianfu" oninput="formatMoney(this);checkPay();calc()" min="0">
-  </div>
-  <div class="input-box">
-    <span class="label">垫付</span>
-    <input type="number" id="dianfu" oninput="formatMoney(this);calc()" min="0">
-  </div>
-  <div class="input-box">
-    <span class="label">回付</span>
-    <input type="number" id="huifu" oninput="formatMoney(this);calc()" min="0">
-  </div>
-  <div class="input-box">
-    <span class="label">总运费</span>
-    <input type="number" id="total" readonly>
-  </div>
-  <div class="input-box">
-    <span class="label">送货费</span>
-    <input type="number" id="song" oninput="formatMoney(this)" min="0">
-  </div>
-  <div class="btn-line">
+
+  <div class="btn-group">
     <button class="btn-save" onclick="saveData()">保存单据</button>
     <button class="btn-export" onclick="openExportToday()">导出今日货单</button>
   </div>
@@ -219,33 +159,20 @@ button{flex:1;padding:18px;border:none;border-radius:10px;font-size:17px;color:#
 </div>
 
 <div id="searchPage" style="display:none;padding-bottom:40px;">
-  <button class="back-btn" onclick="goBack()">← 返回录单界面</button>
+  <button class="back-btn" onclick="goBack()">← 返回录单</button>
   <div class="title">单据查询</div>
   <div class="search-box">
-    <div class="search-title">筛选条件</div>
+    <div class="search-title">筛选</div>
     <div class="search-row">
-      <div class="input-box">
-        <span class="label" style="font-size:15px">目的地</span>
-        <select id="s_addr" style="padding:12px;font-size:15px">
-          <option value="">全部</option>
-          <option value="西和">西和</option>
-          <option value="礼县">礼县</option>
-          <option value="盐官">盐官</option>
-        </select>
-      </div>
-      <div class="input-box">
-        <span class="label" style="font-size:15px">日期</span>
-        <input type="date" id="s_date" style="padding:12px;font-size:15px">
-      </div>
+      <div class="input-box"><span class="label">目的地</span><select id="s_addr"><option value="">全部</option><option value="西和">西和</option><option value="礼县">礼县</option><option value="盐官">盐官</option></select></div>
+      <div class="input-box"><span class="label">日期</span><input type="date" id="s_date"></div>
     </div>
-    <button class="btn-search" onclick="searchData()">立即查询</button>
-    <button class="btn-reset" onclick="resetSearch()">重置条件</button>
+    <button class="btn-search" onclick="searchData()">查询</button>
+    <button class="btn-reset" onclick="resetSearch()">重置</button>
   </div>
-  <button class="clear-search-btn" onclick="clearSearchResult()">删除当前查询的所有单据</button>
-  <button class="clear-all-btn" onclick="clearAllFromSearch()">⚠️ 删除所有历史单据</button>
-  <div id="searchResult" style="margin-top:20px;">
-    <div id="resultList"></div>
-  </div>
+  <button class="clear-search-btn" onclick="clearSearchResult()">删除当前查询结果</button>
+  <button class="clear-all-btn" onclick="clearAllFromSearch()">⚠️ 删除所有单据</button>
+  <div id="searchResult" style="margin-top:20px;"><div id="resultList"></div></div>
 </div>
 
 <script>
@@ -259,12 +186,16 @@ window.onload = function(){
   setDefaultDate();
 }
 
+function forcePositive(input) {
+  let val = input.value.replace(/[^0-9]/g, '');
+  input.value = val < 0 ? 0 : val;
+}
+
 function setDefaultDate(){
   let d = new Date();
-  let y = d.getFullYear();
-  let m = (d.getMonth()+1).toString().padStart(2,'0');
-  let day = d.getDate().toString().padStart(2,'0');
-  let today = y+"-"+m+"-"+day;
+  let today = d.getFullYear() + "-" + 
+              String(d.getMonth()+1).padStart(2,'0') + "-" + 
+              String(d.getDate()).padStart(2,'0');
   document.getElementById("date").value = today;
 }
 
@@ -273,45 +204,37 @@ function getFormatDate(){
   return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
 }
 
-function formatMoney(input){
-  let val = input.value.replace(/[^\d.]/g, '');
-  let parts = val.split('.');
-  if(parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
-  if(val.startsWith('.')) val = '0' + val;
-  input.value = val;
-}
-
 function checkPay(){
   let t = document.getElementById("tifu");
   let x = document.getElementById("xianfu");
-  if(t.value > 0){x.value=0;x.disabled=true}else{x.disabled=false}
-  if(x.value > 0){t.value=0;t.disabled=true}else{t.disabled=false}
+  if(Number(t.value) > 0){ x.value = 0; x.disabled = true; } else { x.disabled = false; }
+  if(Number(x.value) > 0){ t.value = 0; t.disabled = true; } else { t.disabled = false; }
   calc();
 }
 
 function calc(){
-  let a=Number(document.getElementById("daishou").value||0);
-  let b=Number(document.getElementById("tifu").value||0);
-  let c=Number(document.getElementById("xianfu").value||0);
-  let d=Number(document.getElementById("dianfu").value||0);
-  let e=Number(document.getElementById("huifu").value||0);
+  let a=Number(document.getElementById("daishou").value)||0;
+  let b=Number(document.getElementById("tifu").value)||0;
+  let c=Number(document.getElementById("xianfu").value)||0;
+  let d=Number(document.getElementById("dianfu").value)||0;
+  let e=Number(document.getElementById("huifu").value)||0;
   document.getElementById("total").value = a+b+c+d+e;
 }
 
 function checkPayEdit(){
   let t = document.getElementById("e_tifu");
   let x = document.getElementById("e_xianfu");
-  if(t.value > 0){x.value=0;x.disabled=true}else{x.disabled=false}
-  if(x.value > 0){t.value=0;t.disabled=true}else{t.disabled=false}
+  if(Number(t.value) > 0){ x.value = 0; x.disabled = true; } else { x.disabled = false; }
+  if(Number(x.value) > 0){ t.value = 0; t.disabled = true; } else { t.disabled = false; }
   calcEdit();
 }
 
 function calcEdit(){
-  let a=Number(document.getElementById("e_daishou").value||0);
-  let b=Number(document.getElementById("e_tifu").value||0);
-  let c=Number(document.getElementById("e_xianfu").value||0);
-  let d=Number(document.getElementById("e_dianfu").value||0);
-  let e=Number(document.getElementById("e_huifu").value||0);
+  let a=Number(document.getElementById("e_daishou").value)||0;
+  let b=Number(document.getElementById("e_tifu").value)||0;
+  let c=Number(document.getElementById("e_xianfu").value)||0;
+  let d=Number(document.getElementById("e_dianfu").value)||0;
+  let e=Number(document.getElementById("e_huifu").value)||0;
   document.getElementById("e_total").value = a+b+c+d+e;
 }
 
@@ -324,13 +247,13 @@ function showToast(msg){
 
 function checkHno() {
   let inp = document.getElementById("hno");
-  let val = inp.value.trim();
-  inp.classList.remove("error");
-  if (val === "") {
+  inp.value = inp.value.trim();
+  if (!inp.value) {
     inp.classList.add("error");
     showToast("货号不能为空");
     return false;
   }
+  inp.classList.remove("error");
   return true;
 }
 
@@ -339,11 +262,10 @@ function checkTodayHnoRealTime(){
   let nowHno = inp.value.trim();
   if(!nowHno) return;
   let formatDate = getFormatDate();
-  let todayList = dataList.filter(item=>item.date == formatDate);
-  let hasRepeat = todayList.some(item=>item.hno == nowHno);
-  if(hasRepeat){
+  let has = dataList.some(item=>item.date==formatDate && item.hno==nowHno);
+  if(has){
     inp.classList.add("error");
-    showToast("当天货号重复，请更换！");
+    showToast("当天货号不能重复！");
   }else{
     inp.classList.remove("error");
   }
@@ -351,44 +273,78 @@ function checkTodayHnoRealTime(){
 
 function checkName() {
   let inp = document.getElementById("getNname");
-  let val = inp.value.trim();
-  inp.classList.remove("error");
-  if (val === "") {
+  inp.value = inp.value.trim();
+  if (!inp.value) {
     inp.classList.add("error");
     showToast("收件人不能为空");
     return false;
   }
+  let phoneReg = /^\d+$/;
+  let val = inp.value;
+  if (phoneReg.test(val) && val.length !== 11) {
+    inp.classList.add("error");
+    showToast("请输入正确的11位手机号");
+    return false;
+  }
+  inp.classList.remove("error");
   return true;
 }
 
 function checkHnoEdit() {
   let inp = document.getElementById("e_hno");
-  let val = inp.value.trim();
-  inp.classList.remove("error");
-  if (val === "") {
+  inp.value = inp.value.trim();
+  if (!inp.value) {
     inp.classList.add("error");
     showToast("货号不能为空");
     return false;
   }
+  inp.classList.remove("error");
   return true;
+}
+
+function checkEditHnoRepeat(){
+  if(editIndex === -1) return;
+  let inp = document.getElementById("e_hno");
+  let newHno = inp.value.trim();
+  let targetDate = dataList[editIndex].date;
+  
+  let duplicate = dataList.some((item,idx)=>{
+    return idx !== editIndex && item.date === targetDate && item.hno === newHno;
+  });
+  
+  if(duplicate){
+    inp.classList.add("error");
+    showToast("修改后货号重复，无法保存！");
+  }else{
+    inp.classList.remove("error");
+  }
 }
 
 function checkNameEdit() {
   let inp = document.getElementById("e_getNname");
-  let val = inp.value.trim();
-  inp.classList.remove("error");
-  if (val === "") {
+  inp.value = inp.value.trim();
+  if (!inp.value) {
     inp.classList.add("error");
     showToast("收件人不能为空");
     return false;
   }
+  let phoneReg = /^\d+$/;
+  let val = inp.value;
+  if (phoneReg.test(val) && val.length !== 11) {
+    inp.classList.add("error");
+    showToast("请输入11位手机号");
+    return false;
+  }
+  inp.classList.remove("error");
   return true;
 }
 
 function checkInputFinal() {
   let ok1 = checkHno();
   let ok2 = checkName();
-  return ok1 && ok2;
+  checkTodayHnoRealTime();
+  let noRepeat = !document.getElementById("hno").classList.contains("error");
+  return ok1 && ok2 && noRepeat;
 }
 
 function goToSearch(){
@@ -404,8 +360,10 @@ function goBack(){
 }
 
 function searchData(){
-  let s_addr = document.getElementById("s_addr").value.trim();
-  let s_date = document.getElementById("s_date").value;
+  let s_addr = document.getElementById("s_addr");
+  if(s_addr) s_addr = s_addr.value;
+  let s_date = document.getElementById("s_date");
+  if(s_date) s_date = s_date.value;
   let filterDate = "";
   if(s_date){
     let d = new Date(s_date);
@@ -415,16 +373,18 @@ function searchData(){
     filterDate = d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
   }
   searchResultData = dataList.filter(item=>{
-    let matchAddr = !s_addr || item.addr==s_addr;
-    let matchDate = !filterDate || item.date==filterDate;
+    let matchAddr = !s_addr || item.addr === s_addr;
+    let matchDate = !filterDate || item.date === filterDate;
     return matchAddr && matchDate;
   });
   renderSearchResult();
 }
 
 function resetSearch(){
-  document.getElementById("s_addr").value = "";
-  document.getElementById("s_date").value = "";
+  let el = document.getElementById("s_addr");
+  if(el) el.value = "";
+  el = document.getElementById("s_date");
+  if(el) el.value = "";
   searchResultData = [];
   renderSearchResult();
 }
@@ -432,33 +392,30 @@ function resetSearch(){
 function saveData(){
   if(!checkInputFinal()) return;
   let addr = document.getElementById("addr").value;
-  localStorage.setItem("lastAddr",addr);
-  let hno = document.getElementById("hno").value.trim();
+  localStorage.setItem("lastAddr", addr);
   let item = {
-    addr:addr,
-    date:getFormatDate(),
-    hno:hno,
-    getNname:document.getElementById("getNname").value,
-    name:document.getElementById("name").value,
-    daishou:document.getElementById("daishou").value||0,
-    tifu:document.getElementById("tifu").value||0,
-    xianfu:document.getElementById("xianfu").value||0,
-    dianfu:document.getElementById("dianfu").value||0,
-    huifu:document.getElementById("huifu").value||0,
-    total:document.getElementById("total").value||0,
-    song:document.getElementById("song").value||0
+    addr: addr,
+    date: getFormatDate(),
+    hno: document.getElementById("hno").value.trim(),
+    getNname: document.getElementById("getNname").value.trim(),
+    name: document.getElementById("name").value.trim(),
+    daishou: document.getElementById("daishou").value || 0,
+    tifu: document.getElementById("tifu").value || 0,
+    xianfu: document.getElementById("xianfu").value || 0,
+    dianfu: document.getElementById("dianfu").value || 0,
+    huifu: document.getElementById("huifu").value || 0,
+    total: document.getElementById("total").value || 0,
+    song: document.getElementById("song").value || 0
   };
   dataList.push(item);
-  localStorage.setItem("tianheData",JSON.stringify(dataList));
+  localStorage.setItem("tianheData", JSON.stringify(dataList));
   clearInput();
-  document.getElementById("hno").focus();
-  showToast("录入完成");
-  window.scrollTo(0,0);
+  showToast("保存成功 ✅");
 }
 
 function editItem(index){
   editIndex = index;
-  let i = searchResultData[index];
+  let i = dataList[index];
   document.getElementById("e_addr").value = i.addr;
   document.getElementById("e_hno").value = i.hno;
   document.getElementById("e_getNname").value = i.getNname;
@@ -479,49 +436,53 @@ function closeEdit(){
 }
 
 function saveEdit(){
-  if(editIndex<0)return;
+  if(editIndex < 0) return;
   let hnoOk = checkHnoEdit();
   let nameOk = checkNameEdit();
-  if(!hnoOk || !nameOk) return;
-  let old = searchResultData[editIndex];
-  let realIdx = dataList.findIndex(x=>
-    x.date==old.date && x.hno==old.hno && x.addr==old.addr
-  );
-  if(realIdx==-1)return;
-  dataList[realIdx]={
-    addr:document.getElementById("e_addr").value,
-    date:dataList[realIdx].date,
-    hno:document.getElementById("e_hno").value.trim(),
-    getNname:document.getElementById("e_getNname").value,
-    name:document.getElementById("e_name").value,
-    daishou:document.getElementById("e_daishou").value||0,
-    tifu:document.getElementById("e_tifu").value||0,
-    xianfu:document.getElementById("e_xianfu").value||0,
-    dianfu:document.getElementById("e_dianfu").value||0,
-    huifu:document.getElementById("e_huifu").value||0,
-    total:document.getElementById("e_total").value||0,
-    song:document.getElementById("e_song").value||0
+  checkEditHnoRepeat();
+  let noRepeat = !document.getElementById("e_hno").classList.contains("error");
+  
+  if(!hnoOk || !nameOk || !noRepeat) {
+    showToast("请修正错误后再保存");
+    return;
+  }
+  
+  dataList[editIndex] = {
+    ...dataList[editIndex],
+    addr: document.getElementById("e_addr").value,
+    hno: document.getElementById("e_hno").value.trim(),
+    getNname: document.getElementById("e_getNname").value.trim(),
+    name: document.getElementById("e_name").value.trim(),
+    daishou: document.getElementById("e_daishou").value || 0,
+    tifu: document.getElementById("e_tifu").value || 0,
+    xianfu: document.getElementById("e_xianfu").value || 0,
+    dianfu: document.getElementById("e_dianfu").value || 0,
+    huifu: document.getElementById("e_huifu").value || 0,
+    total: document.getElementById("e_total").value || 0,
+    song: document.getElementById("e_song").value || 0
   };
-  localStorage.setItem("tianheData",JSON.stringify(dataList));
+  
+  localStorage.setItem("tianheData", JSON.stringify(dataList));
   closeEdit();
-  searchData();
-  showToast("修改完成");
+  renderSearchResult();
+  showToast("修改成功 ✅");
 }
 
 function clearInput(){
   let lastAddr = localStorage.getItem("lastAddr");
-  document.querySelectorAll("input:not([readonly]),select").forEach(i=>{
-    i.value="";i.disabled=false;
+  document.querySelectorAll("input:not([readonly]), select").forEach(i=>{
+    i.value = "";
+    i.disabled = false;
     i.classList.remove("error");
   });
-  if(lastAddr)document.getElementById("addr").value=lastAddr;
+  if(lastAddr) document.getElementById("addr").value = lastAddr;
   setDefaultDate();
   calc();
 }
 
 function renderSearchResult(){
   let html = "";
-  if(searchResultData.length>0){
+  if(searchResultData.length > 0){
     html += `<button class="export-result-btn" onclick="exportSearchResult()">导出货单</button>`;
   }
   searchResultData.forEach((item,idx)=>{
@@ -536,170 +497,178 @@ function renderSearchResult(){
       <button class="del-btn" onclick="delItemFromSearch(${idx})">删除</button>
     </div>`;
   });
-  if(searchResultData.length===0){
-    html += `<p style="text-align:center;padding:20px;color:#666">暂无匹配数据</p>`;
+  if(searchResultData.length === 0){
+    html += `<p style="text-align:center;padding:20px;color:#666">暂无数据</p>`;
   }
-  document.getElementById("resultList").innerHTML = html;
+  let container = document.getElementById("resultList");
+  if(container) container.innerHTML = html;
 }
 
 function delItemFromSearch(index){
-  let it=searchResultData[index];
-  let real=dataList.findIndex(i=>
-    i.date==it.date && i.hno==it.hno && i.addr==it.addr
+  let target = searchResultData[index];
+  let realIndex = dataList.findIndex(i=> 
+    i.date === target.date && i.hno === target.hno && i.addr === target.addr
   );
-  if(real==-1)return;
-  if(!confirm("确定删除？"))return;
-  dataList.splice(real,1);
-  localStorage.setItem("tianheData",JSON.stringify(dataList));
+  if(realIndex === -1 || !confirm("确定删除该单据？")) return;
+  dataList.splice(realIndex, 1);
+  localStorage.setItem("tianheData", JSON.stringify(dataList));
   searchData();
+  showToast("删除成功");
 }
 
 function openExportToday(){
   document.getElementById("exportTodayMask").style.display = "block";
 }
-
 function closeExportToday(){
-  document.getElementById("exportTodayMask").style.display = "none";
+  document.getElementById("exportTodayMask").style.display="none";
 }
 
 function doExportToday(){
-  let addr=document.getElementById("exportTodayAddr").value;
+  let addr = document.getElementById("exportTodayAddr").value;
   let d = new Date();
-  let td = d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
-  let list=dataList.filter(i=>i.addr==addr && i.date==td);
-  if(list.length===0){showToast("今日无数据");return}
-  doExport(list);
+  let todayText = d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
+  let todayData = dataList.filter(i=>i.addr===addr && i.date===todayText);
+  if(todayData.length === 0){
+    showToast("今日无单据");
+    return;
+  }
+  doExport(todayData);
   closeExportToday();
 }
 
 function exportSearchResult(){
-  if(searchResultData.length==0){showToast("无结果可导出");return}
+  if(searchResultData.length === 0){
+    showToast("无数据可导出");
+    return;
+  }
   doExport(searchResultData);
 }
 
 function doExport(exportData){
-  let first=exportData[0];
-  let dateStr=first.date.replace(/[年月]/g,"-").replace("日","");
-  let fileName=dateStr+first.addr+"货运单.xls";
+  let first = exportData[0];
+  let dateStr = first.date.replace(/[年月]/g, "-").replace("日", "");
+  let fileName = `${dateStr}${first.addr}货运单.xlsx`;
 
-  let sumDaishou=0,sumTifu=0,sumXianfu=0,sumDianfu=0,sumHuifu=0,sumTotal=0,sumSong=0;
-  exportData.forEach(i=>{
-    sumDaishou+=Number(i.daishou||0);
-    sumTifu+=Number(i.tifu||0);
-    sumXianfu+=Number(i.xianfu||0);
-    sumDianfu+=Number(i.dianfu||0);
-    sumHuifu+=Number(i.huifu||0);
-    sumTotal+=Number(i.total||0);
-    sumSong+=Number(i.song||0);
-  });
-
-  let html=`<!DOCTYPE html>
+  let html = `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;font-family:"微软雅黑";font-size:11px}
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-th,td{border:1px solid #000;padding:6px 2px;text-align:center;font-size:10.5pt}
+@media print {
+  @page {
+    size: A4; margin:1.0cm 0.8cm;
+  }
+  body,html{width:100% !important;height:100% !important;margin:0 !important;padding:0 !important;}
+  table{width:100% !important;table-layout:fixed !important;page-break-inside:avoid;}
+}
+html,body{width:210mm;height:297mm;font-family:"微软雅黑";font-size:12px;margin:0 auto;padding:0;}
+table{width:100%;border-collapse:collapse;table-layout:fixed;}
+th,td{border:1px solid #000;padding:6px;text-align:center;white-space:nowrap;}
 th{background:#f2f2f2}
 .total-row{font-weight:bold;background:#f8f9fa}
-.title{text-align:center;font-size:18px;font-weight:bold;margin-bottom:8px}
-.info-bar{display:flex;justify-content:space-between;margin-bottom:8px}
+.title{text-align:center;font-size:24px;font-weight:bold;margin:14px 0;}
+.info-bar{display:flex;justify-content:space-between;margin:0 0 10px;font-size:14px;}
 </style>
 </head>
 <body>
 <div class="title">天水天和源物流货运公司随货清单</div>
 <div class="info-bar">
-<span style="text-align:left">目的地：${first.addr}</span>
-<span style="text-align:right">${first.date}</span>
+<span>目的地：${first.addr}</span>
+<span>${first.date}</span>
 </div>
 <table>
 <tr>
 <th width="40">序号</th>
 <th width="80">货号</th>
-<th width="90">收件人</th>
-<th width="60">货名</th>
-<th width="60">代收</th>
-<th width="60">提付</th>
-<th width="60">现付</th>
-<th width="60">垫付</th>
-<th width="60">回付</th>
-<th width="70">总运费</th>
-<th width="70">送货费</th>
+<th width="120">收件人</th>
+<th width="70">货名</th>
+<th width="55">代收</th>
+<th width="55">提付</th>
+<th width="55">现付</th>
+<th width="55">垫付</th>
+<th width="55">回付</th>
+<th width="60">总运费</th>
+<th width="60">送货费</th>
 </tr>`;
 
   exportData.forEach((item,idx)=>{
-    let ds = Number(item.daishou) > 0 ? item.daishou : '';
-    let tf = Number(item.tifu) > 0 ? item.tifu : '';
-    let xf = Number(item.xianfu) > 0 ? item.xianfu : '';
-    let df = Number(item.dianfu) > 0 ? item.dianfu : '';
-    let hf = Number(item.huifu) > 0 ? item.huifu : '';
-    let sg = Number(item.song) > 0 ? item.song : '';
-    html+=`<tr>
+    const show = v => v > 0 ? v : "";
+    html += `
+<tr>
 <td>${idx+1}</td>
-<td style="mso-number-format:'\@';">${item.hno}</td>
+<td>${item.hno}</td>
 <td>${item.getNname}</td>
 <td>${item.name}</td>
-<td>${ds}</td>
-<td>${tf}</td>
-<td>${xf}</td>
-<td>${df}</td>
-<td>${hf}</td>
+<td>${show(item.daishou)}</td>
+<td>${show(item.tifu)}</td>
+<td>${show(item.xianfu)}</td>
+<td>${show(item.dianfu)}</td>
+<td>${show(item.huifu)}</td>
 <td>${item.total||0}</td>
-<td>${sg}</td>
+<td>${show(item.song)}</td>
 </tr>`;
   });
 
-  html+=`<tr class="total-row">
+  let sum = {
+    daishou:0, tifu:0, xianfu:0, dianfu:0, huifu:0, total:0, song:0
+  };
+  exportData.forEach(i=>{
+    sum.daishou += Number(i.daishou)||0;
+    sum.tifu += Number(i.tifu)||0;
+    sum.xianfu += Number(i.xianfu)||0;
+    sum.dianfu += Number(i.dianfu)||0;
+    sum.huifu += Number(i.huifu)||0;
+    sum.total += Number(i.total)||0;
+    sum.song += Number(i.song)||0;
+  });
+
+  html += `
+<tr class="total-row">
 <td colspan="4">合 计</td>
-<td>${sumDaishou > 0 ? sumDaishou : ''}</td>
-<td>${sumTifu > 0 ? sumTifu : ''}</td>
-<td>${sumXianfu > 0 ? sumXianfu : ''}</td>
-<td>${sumDianfu > 0 ? sumDianfu : ''}</td>
-<td>${sumHuifu > 0 ? sumHuifu : ''}</td>
-<td>${sumTotal}</td>
-<td>${sumSong > 0 ? sumSong : ''}</td>
+<td>${sum.daishou||""}</td>
+<td>${sum.tifu||""}</td>
+<td>${sum.xianfu||""}</td>
+<td>${sum.dianfu||""}</td>
+<td>${sum.huifu||""}</td>
+<td>${sum.total||0}</td>
+<td>${sum.song||""}</td>
 </tr>
 </table>
 </body>
 </html>`;
 
-  let uri = "data:text/html;charset=utf-8," + encodeURIComponent(html);
+  let blob = new Blob([html], {type:"application/vnd.ms-excel"});
   let a = document.createElement("a");
-  a.href = uri;
+  a.href = URL.createObjectURL(blob);
   a.download = fileName;
-  document.body.appendChild(a);
-  setTimeout(() => {
-    a.click();
-    document.body.removeChild(a);
-    showToast("导出完成");
-  }, 100);
+  a.click();
+  showToast("导出成功");
 }
 
 function clearSearchResult(){
   if(searchResultData.length === 0){
-    showToast("暂无查询结果可删除");
+    showToast("暂无查询结果");
     return;
   }
-  if(!confirm("确定删除当前查询出的所有单据？")) return;
-  searchResultData.forEach(item => {
-    let idx = dataList.findIndex(i =>
+  if(!confirm("确定删除当前查询的所有单据？")) return;
+  searchResultData.forEach(item=>{
+    let idx = dataList.findIndex(i=>
       i.date === item.date && i.hno === item.hno && i.addr === item.addr
     );
     if(idx !== -1) dataList.splice(idx, 1);
   });
   localStorage.setItem("tianheData", JSON.stringify(dataList));
   searchData();
-  showToast("已删除当前查询的所有单据");
+  showToast("删除成功");
 }
 
 function clearAllFromSearch(){
-  if(!confirm("确定删除所有历史单据？此操作不可恢复！"))return;
+  if(!confirm("确定删除所有数据？此操作不可恢复！")) return;
   dataList = [];
   localStorage.setItem("tianheData", "[]");
   resetSearch();
-  showToast("已删除所有单据");
+  showToast("已清空所有数据");
 }
 </script>
 </body>
